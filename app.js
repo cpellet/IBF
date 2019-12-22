@@ -2,13 +2,16 @@ var HTMLParser = require('node-html-parser');
 var fs = require('fs');
 const ora = require('ora');
 const open = require('open');
+var figlet = require('figlet');
 const request = require('request');
 const prompts = require('prompts');
 var download = require('download-pdf')
 var findInFiles = require('find-in-files');
 const crawler = require('crawler-request');
+const chalkAnimation = require('chalk-animation');
 const arrayToTxtFile = require('array-to-txt-file')
 const removeEmptyLines = require("remove-blank-lines");
+
 const forEachAsync = require('foreachasync').forEachAsync
 
 const endpoint = "https://freeexampapers.com/exam-papers/IB/";
@@ -389,12 +392,23 @@ async function paperMenu(subject, option, option1, session, paper){
 }
 
 async function app(){
-    console.log("______________________________________")
-    console.log("|                                    |")
-    console.log("|    Welcome to the IBFetch tool!    |")
-    console.log("|____________________________________|")
     console.log("");
-    await mainMenu();
+    figlet('IB Fetch', function(err, data) {
+        if (err) {
+            console.log('Something went wrong...');
+            console.dir(err);
+            return;
+        }
+        const title = chalkAnimation.glitch(data);
+        setTimeout(() => {
+            title.replace("                             by cyrus");
+        }, 1000);
+        setTimeout(() => {
+            title.stop();
+            console.log("");
+            mainMenu();
+        }, 2000);
+    });
 }
 
 app();
